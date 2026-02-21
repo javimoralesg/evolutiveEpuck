@@ -57,7 +57,7 @@ El objetivo fundamental de esta función es clasificar a los individuos de una g
 Para la realización de este trabajo, hemos desarrollamos la siguiente función fitness para evaluar a los robots:
 
 $$
-F = \frac {\sum_ {i = 0} ^ {N s t e p s} \left[ \left[ V \cdot \left(1 - \sqrt {\Delta V}\right) \cdot \left(1 - \max  \{I R _ {i} \}\right) \cdot \left(M _ {R} \cdot M _ {L}\right) \right] \cdot \left[ GM_{ON} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \left\{ \begin{array}{l l} (\max \{RL_{i}\} - 0.5) & si \max \{RL_{i}\} > 0.93 \\ 0 & si no \end{array} \right. \right) + G M _ {O F F} \cdot \left(\frac {\sum_ {j = 0} ^ {N_{sensors}} R L _ {j}}{N_{sensors}}\right) \right] \right] }{N_{steps}} \cdot \left(\frac {F _ {o b j}}{2 0}\right)
+F = \frac {\sum_{i=0}^{N_{steps}} \left[ \left[ V \cdot (1 - \sqrt{\Delta V}) \cdot (1 - \max \{IR_{i}\}) \cdot (M_{R} \cdot M_{L}) \right] \cdot \left[ GM_{ON} \cdot \left( \frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \left\{ \begin{array}{ll} (\max \{RL_{i}\} - 0.5) & si \ \max \{RL_{i}\} > 0.93 \\ 0 & sino \end{array} \right. \right) + GM_{OFF} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} RL_{j}}{N_{sensors}}\right) \right] \right]}{N_{steps}} \cdot \left(\frac{F_{obj}}{20}\right)
 $$
 
 - $V$ Evalúa que el robot se mueva rápido
