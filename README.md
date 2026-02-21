@@ -28,7 +28,6 @@ Modificación 2
 Observaciones
 Conclusiones
 
-
 # Introducción
 
 En el presente documento presentamos el desarrollo e implementación de una red neuronal sobre un robot E-Puck como el que se puede observar en la Imagen 1. Para ello emplearemos el simulador IRSIM proporcionado en la asignatura de IRIN de la ETSIT UPM.
@@ -58,15 +57,15 @@ El objetivo fundamental de esta función es clasificar a los individuos de una g
 Para la realización de este trabajo, hemos desarrollamos la siguiente función fitness para evaluar a los robots:
 
 $$
-F = \frac {\sum_ {i = 0} ^ {N s t e p s} \left[ \left[ V \cdot \left(1 - \sqrt {\Delta V}\right) \cdot \left(1 - \max  \{I R _ {i} \}\right) \cdot \left(M _ {R} \cdot M _ {L}\right) \right] \cdot \left[ G M _ {O N} \cdot \left(\frac {\sum_ {i = 0} ^ {N u m a r s} B L _ {i}}{N s c n s o r s} - \left\{ \begin{array}{l l} (\max  \{R L _ {i} \} - 0 . 5) &amp; s i \max  \{R L _ {i} \} &gt; 0 . 9 3 \\ 0 &amp; s i n o \end{array} \right) \right] + G M _ {O F F} \cdot \left(\frac {\sum_ {i = 0} ^ {N u m a r s} R L _ {i}}{N s c n s o r s}\right) \right]}{N s t e p s} \cdot \left(\frac {F _ {o b j}}{2 0}\right)
+F = \frac {\sum_ {i = 0} ^ {N s t e p s} \left[ \left[ V \cdot \left(1 - \sqrt {\Delta V}\right) \cdot \left(1 - \max  \{I R _ {i} \}\right) \cdot \left(M _ {R} \cdot M _ {L}\right) \right] \cdot \left[ GM_{ON} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \left\{ \begin{array}{l l} (\max \{RL_{i}\} - 0.5) & si \max \{RL_{i}\} > 0.93 \\ 0 & si no \end{array} \right. \right) + G M _ {O F F} \cdot \left(\frac {\sum_ {j = 0} ^ {N_{sensors}} R L _ {j}}{N_{sensors}}\right) \right] \right]}{N s t e p s} \cdot \left(\frac {F _ {o b j}}{2 0}\right)
 $$
 
 - $V$ Evalúa que el robot se mueva rápido
 - $\left(1 - \sqrt{\Delta V}\right)$ Evalúa que las ruedas del robot se muevan a la misma velocidad
 - $\left(1 - \max \{I R_{i}\}\right)$ Evalúa que el robot no se acerca a los obstáculos
 - $\left(M_{R} \cdot M_{L}\right)$ Evalúa que ambas ruedas estén activas
-- $GM_{ON} \cdot \left(\frac{\sum_{i=0}^{N_{sensors}} RL_{i}}{N_{sensors}} - \left\{ \begin{array}{l l} (\max \{RL_{i}\} - 0.5) &amp; s i \max \{RL_{i}\} &gt; 0.93 \\ 0 &amp; s i n o \end{array} \right.$ Evalúa que en el caso de haber “agarrado un objeto” (pasar por una baldosa gris), el robot se dirija hacia la luz azul y no se acerque excesivamente a la luz roja
-- $GM_{OFF} \cdot \left(\frac{\sum_{i=0}^{N_{sensors}} RL_{i}}{N_{sensors}}\right)$ Evalúa que en el caso de no tener “agarrado un objeto” (pasar por una baldosa negra), el robot se dirija hacia la luz roja
+- $GM_{ON} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \left\{ \begin{array}{l l} (\max \{RL_{i}\} - 0.5) & si \max \{RL_{i}\} > 0.93 \\ 0 & si no \end{array} \right)\right.$ Evalúa que en el caso de haber “agarrado un objeto” (pasar por una baldosa gris), el robot se dirija hacia la luz azul y no se acerque excesivamente a la luz roja
+- $GM_{OFF} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} RL_{j}}{N_{sensors}}\right)$ Evalúa que en el caso de no tener “agarrado un objeto” (pasar por una baldosa negra), el robot se dirija hacia la luz roja
 - $\left(\frac{F_{obj}}{20}\right)$ Promueve que el robot vaya cambiando de luz objetivo, penalizando si permanece mucho tiempo buscando la misma luz
 
 La función fitness está depende de numerosos parámetros que acaban siendo altamente restrictivos con el propósito de que las evoluciones convergan hacia soluciones viables y adaptadas a la tarea a desempeñar, evitando así comportamientos no funcionales o evoluciones subóptimas.
@@ -98,7 +97,6 @@ Por lo que podemos afirmar que el tamaño del cromosoma es de 52.
 
 Vamos a emplear la fitness function vista anteriormente para suplir la tarea planteada de detectar un fuego e ir a por un extintor, y vamos a realizar diversas modificaciones hasta llegar a un punto en el que el robot realice correctamente el funcionamiento.
 
-
 # Modificación 1
 
 En esta primera modificación empezamos la evolución con los siguientes operadores:
@@ -122,7 +120,6 @@ Primero lo ejecutamos en el mismo escenario en el que ha evolucionado.
 ![chunk-0-img-5.jpeg](./assets/chunk-0-img-5.jpeg)
 
 Observamos que sigue correctamente el objetivo propuesto, es decir, va hacia la luz roja, luego hacia la azul y no presenta ninguna colisión. La trayectoria que dibuja es igual durante toda la ejecución como se puede apreciar en la gráfica, por lo que parece que es un movimiento "aprendido". Para comprobar esta hipótesis ejecutamos más pruebas.
-
 
 ## Prueba 2
 
@@ -148,7 +145,6 @@ El resultado que dibuja el es diferente a los dos anteriores como se aprecia en 
 
 Vamos a modificar el resultado de la evolución anterior. Puesto que la evolución ha sufrido leves estancamientos, aumentamos la mutación rate al 5% para así aumentar la diversidad genética y que se reduzcan los periodos de máximos. Seguimos evolucionando desde donde está y dejamos que evolucione 100 generaciones más.
 
-
 ![chunk-0-img-10.jpeg](./assets/chunk-0-img-10.jpeg)
 
 En la evolución de la fitness, aunque también se aprecian periodos de estancamiento, se ha producido una mejora de la fitness, llegando a una máxima de 0.00015947 en las últimas generaciones. Nuevamente analizamos el resultado de la mejor generación.
@@ -168,7 +164,6 @@ Probamos a eliminar la luz roja y su suelo gris del centro para forzar que cambi
 ![chunk-0-img-13.jpeg](./assets/chunk-0-img-13.jpeg)
 
 ![chunk-0-img-14.jpeg](./assets/chunk-0-img-14.jpeg)
-
 
 No realiza bien el objetivo puesto que cuando se dirige hacia la luz roja, a pesar de que se acerca mucho a la zona gris, no llega a pasar por ella, y en vez de acercarse nuevamente y pasar por encima, vuelve hacia la luz azul.
 
@@ -190,7 +185,6 @@ Los resultados de la fitness obtenidos son inferiores a los de la anterior modif
 
 Nuevamente, al poner al robot a interactuar con el entorno en el que ha evolucionado, se obtienen comportamientos correctos pero repetitivos, realizando siempre una diagonal entre las luces azules existentes y la luz roja del origen.
 
-
 # Prueba 2
 
 Probamos eliminar la luz roja junto con su suelo gris del centro de la arena.
@@ -210,7 +204,6 @@ Puesto que tras esta generación, el robot ha empeorado significativamente, vamo
 Notamos que la fitness tiene un crecimiento lento en las últimas generaciones, llegando a un valor máximo de 0.00014314.
 
 Vamos a realizar las mismas pruebas que antes para comprobar que esta vez el robot tenga un comportamiento más correcto.
-
 
 ## Prueba 1
 
@@ -233,7 +226,6 @@ Ante la ausencia de la luz roja y el suelo gris asociado situados en el centro, 
 Volvemos a deshacer los cambios y nos situamos nuevamente en la situación final de la "Modificación 2", ya que la evolución del desempeño del E-puck no ha mejorado. Ahora vamos a probar a aumentar únicamente el tamaño de la población a 75 individuos.
 
 ![chunk-0-img-25.jpeg](./assets/chunk-0-img-25.jpeg)
-
 
 Esta vez hemos obtenido una mejora en la fitness alcanzando un valor de 0.000178. Este valor es el mayor alcanzado hasta este momento.
 
@@ -261,7 +253,6 @@ El valor de la fitness ha sido muy bajo, cosa que era de esperar, pero los movim
 
 Con el objetivo de tener un resultado más favorable, vamos a descartar esta primera red neuronal y la vamos a sustituir por una más compleja.
 
-
 # Red neuronal 2
 
 En esta segunda red neuronal hemos elevado la complejidad añadiendo una capa oculta de sigmoides con cuatro salidas, que se ocupará de procesar la información obtenida por los sensores de luz roja y azul, y de suelo con memoria, para luego enviarlo a la capa sigmoide encargada de manejar los motores.
@@ -287,7 +278,6 @@ En esta primera modificación empezamos la evolución con los siguientes operado
 - Evaluation time = 300
 - Mutation rate = 0.02
 
-
 ![chunk-0-img-31.jpeg](./assets/chunk-0-img-31.jpeg)
 
 Tras la evolución de 100 generaciones, y aunque los valores de la fitness sean muy bajos, observamos que la fitness evoluciona progresivamente como se puede apreciar en la gráfica. El mejor valor de la fitness es de 0.00012829.
@@ -305,7 +295,6 @@ Iniciaremos la primera prueba de comportamiento en el mismo escenario en el que 
 ![chunk-0-img-33.jpeg](./assets/chunk-0-img-33.jpeg)
 
 La trayectoria descrita se puede observar en la gráfica que es correcta, aunque realiza siempre el mismo recorrido diagonal.
-
 
 # Prueba 2
 
@@ -326,7 +315,6 @@ Al haber sido la primera generación y obtener un resultado no deseado, vamos a 
 Aclarado esto, el valor de la fitness ha tenido un crecimiento rápido y continuado, alcanzando un valor máximo de 0.00003862.
 
 Seguidamente, analizamos qué tanto ha evolucionado el robot en la realización de detectar un fuego e ir a por un extintor.
-
 
 # Prueba 1
 
@@ -398,7 +386,6 @@ Ante el estancamiento de la fitness, y al bajo rendimiento en la última prueba 
 
 ![chunk-0-img-50.jpeg](./assets/chunk-0-img-50.jpeg)
 
-
 Tras evolucionar 200 generaciones más, extraemos el siguiente análisis del valor de la fitness. El crecimiento en las primeras generaciones ha sido muy pronunciado, y aunque en las últimas se hayan producido estancamientos, la fitness ha alcanzado un valor de 0.00006641. Este valor es excelente puesto que casi ha duplicado la fitness de la que partíamos.
 
 Analizamos el resultado de estas generaciones realizando las siguientes pruebas:
@@ -425,34 +412,6 @@ Si eliminamos la fuente de luz roja del centro con su suelo gris, el movimiento 
 
 ![chunk-0-img-56.jpeg](./assets/chunk-0-img-56.jpeg)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Al suprimir la luz roja y el suelo gris de la parte superior izquierda y la luz azul y su suelo negor de la parte superior derecha, en un inicio el E-Puck sí que logra alcanzar la zona gris, pero luego se queda dando vueltas sobre la luz azul sin dirigirse hacia la luz roja. Este comportamiento se aprecia de forma visual en la gráfica.
 
 ## Modificación 5
@@ -460,7 +419,7 @@ Al suprimir la luz roja y el suelo gris de la parte superior izquierda y la luz 
 Con el objetivo de solventar este último comportamiento no deseado, vamos a probar a cambiar la función *fitness* para que sea menos restrictiva. El cambio que se plantea consiste en sustituir el valor de la media de los sensores de luz, por el valor máximo de estos a la hora de buscar una fuente de luz, de esta forma podemos conseguir que el robot se aproxime más a las fuentes de luz. En definitiva, con el cambio la función *fitness* se vería de esta forma:
 
 $$
-F = \frac {\sum_ {i = 0} ^ {N s t e p s} \left[ \left[ V \cdot \left(1 - \sqrt {\Delta V}\right) \cdot \left(1 - \max  \left\{I R _ {i} \right\}\right) \cdot \left(M _ {R} \cdot M _ {L}\right) \right] \cdot \left[ G M _ {O N} \cdot \left(\max  \left\{B L _ {i} \right\} - \left\{\binom {(\max  \{R L _ {i} \} - 0 . 5)} {0} \frac {s i \max  \{R L _ {i} \} &gt; 0 . 9 3}{s i n o} \right\} \right] + G M _ {O F F} \cdot (\max  \{R L _ {i} \}) \right]}{N s t e p s} \cdot \left(\frac {F _ {o b j}}{2 0}\right)
+F = \frac {\sum_ {i = 0} ^ {N s t e p s} \left[ \left[ V \cdot \left(1 - \sqrt {\Delta V}\right) \cdot \left(1 - \max  \left\{I R _ {i} \right\}\right) \cdot \left(M _ {R} \cdot M _ {L}\right) \right] \cdot \left[ G M _ {O N} \cdot \left(\max  \left\{B L _ {i} \right\} - \left\{\binom {(\max  \{R L _ {i} \} - 0 . 5)} {0} \frac {s i \max  \{R L _ {i} \} > 0 . 9 3}{s i n o} \right\} \right] + G M _ {O F F} \cdot (\max  \{R L _ {i} \}) \right]}{N s t e p s} \cdot \left(\frac {F _ {o b j}}{2 0}\right)
 $$
 
 Tras seguir evolucionando 200 generaciones más, el resultado de la *fitness* obtenido es mucho mayor del que teníamos anteriormente, logrando alcanzar un valor máximo de 0.1144892. Esta diferencia es esperable puesto que la función que hemos empleado es significativamente menos restrictiva.
