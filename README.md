@@ -64,8 +64,11 @@ $$
 - $\left(1 - \sqrt{\Delta V}\right)$ Evalúa que las ruedas del robot se muevan a la misma velocidad
 - $\left(1 - \max \{I R_{i}\}\right)$ Evalúa que el robot no se acerca a los obstáculos
 - $\left(M_{R} \cdot M_{L}\right)$ Evalúa que ambas ruedas estén activas
--  $$GM_{ON} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \begin{cases} (\max\{RL_{i}\} - 0.5) & \text{si } \max\{RL_{i}\} > 0.93 \\\\ 0 & \text{si no} \end{cases}\right)$$  
-Evalúa que en el caso de haber "agarrado un objeto" (pasar por una baldosa gris), el robot se dirija hacia la luz azul y no se acerque excesivamente a la luz roja
+- $GM_{ON} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \delta\right)$, donde:
+
+  $$\delta = \begin{cases} (\max\{RL_{i}\} - 0.5) & \text{si } \max\{RL_{i}\} > 0.93 \\\\ 0 & \text{si no} \end{cases}$$
+
+  Evalúa que en el caso de haber "agarrado un objeto" (pasar por una baldosa gris), el robot se dirija hacia la luz azul y no se acerque excesivamente a la luz roja
 - $GM_{OFF} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} RL_{j}}{N_{sensors}}\right)$ Evalúa que en el caso de no tener “agarrado un objeto” (pasar por una baldosa negra), el robot se dirija hacia la luz roja
 - $\left(\frac{F_{obj}}{20}\right)$ Promueve que el robot vaya cambiando de luz objetivo, penalizando si permanece mucho tiempo buscando la misma luz
 
