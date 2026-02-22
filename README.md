@@ -57,14 +57,14 @@ El objetivo fundamental de esta función es clasificar a los individuos de una g
 Para la realización de este trabajo, hemos desarrollamos la siguiente función fitness para evaluar a los robots:
 
 $$
-F = \frac {\sum_{i=0}^{N_{steps}} \left[ \left[ V \cdot (1 - \sqrt{\Delta V}) \cdot (1 - \max \{IR_{i}\}) \cdot (M_{R} \cdot M_{L}) \right] \cdot \left[ GM_{ON} \cdot \left( \frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \left\{ \begin{array}{ll} (\max \{RL_{i}\} - 0.5) & si \ \max \{RL_{i}\} > 0.93 \\ 0 & sino \end{array} \right. \right) + GM_{OFF} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} RL_{j}}{N_{sensors}}\right) \right] \right]}{N_{steps}} \cdot \left(\frac{F_{obj}}{20}\right)
+F = \frac {\sum_ {i = 0} ^ {N_{steps}} \left[ \left[ V \cdot \left(1 - \sqrt {\Delta V}\right) \cdot \left(1 - \max  \{I R _ {i} \}\right) \cdot \left(M _ {R} \cdot M _ {L}\right) \right] \cdot \left[ GM_{ON} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \begin{cases} (\max \{RL_{i}\} - 0.5) & \text{si } \max \{RL_{i}\} > 0.93 \\ 0 & \text{si no} \end{cases} \right) \right] + G M _ {O F F} \cdot \left(\frac {\sum_ {j = 0} ^ {N_{sensors}} R L _ {j}}{N_{sensors}}\right)  \right] }{N_{steps}} \cdot \left(\frac {F _ {o b j}}{2 0}\right)
 $$
 
 - $V$ Evalúa que el robot se mueva rápido
 - $\left(1 - \sqrt{\Delta V}\right)$ Evalúa que las ruedas del robot se muevan a la misma velocidad
 - $\left(1 - \max \{I R_{i}\}\right)$ Evalúa que el robot no se acerca a los obstáculos
 - $\left(M_{R} \cdot M_{L}\right)$ Evalúa que ambas ruedas estén activas
-- $GM_{ON} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \left\{ \begin{array}{l l} (\max \{RL_{i}\} - 0.5) & si \max \{RL_{i}\} > 0.93 \\ 0 & si no \end{array} \right. \right)$ Evalúa que en el caso de haber “agarrado un objeto” (pasar por una baldosa gris), el robot se dirija hacia la luz azul y no se acerque excesivamente a la luz roja
+- $GM_{ON} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \begin{cases} (\max \{RL_{i}\} - 0.5) & \text{si } \max \{RL_{i}\} > 0.93 \\ 0 & \text{si no} \end{cases} \right) $ Evalúa que en el caso de haber “agarrado un objeto” (pasar por una baldosa gris), el robot se dirija hacia la luz azul y no se acerque excesivamente a la luz roja
 - $GM_{OFF} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} RL_{j}}{N_{sensors}}\right)$ Evalúa que en el caso de no tener “agarrado un objeto” (pasar por una baldosa negra), el robot se dirija hacia la luz roja
 - $\left(\frac{F_{obj}}{20}\right)$ Promueve que el robot vaya cambiando de luz objetivo, penalizando si permanece mucho tiempo buscando la misma luz
 
