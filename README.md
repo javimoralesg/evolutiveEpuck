@@ -66,7 +66,7 @@ $$
 - $\left(M_{R} \cdot M_{L}\right)$ Evalúa que ambas ruedas estén activas
 - $GM_{ON} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} BL_{j}}{N_{sensors}} - \delta\right)$, donde:
 
-  $$\delta = \begin{cases} (\max\{RL_{i}\} - 0.5) & \text{si } \max\{RL_{i}\} > 0.93\\\ 0 & \text{si no} \end{cases}$$
+  $$\delta = \begin{cases} (\max\{RL_{i}\} - 0.5) & \text{si } \max\{RL_{i}\} > 0.93 \\\ 0 & \text{si no} \end{cases}$$
 
   Evalúa que en el caso de haber "agarrado un objeto" (pasar por una baldosa gris), el robot se dirija hacia la luz azul y no se acerque excesivamente a la luz roja
 - $GM_{OFF} \cdot \left(\frac{\sum_{j=0}^{N_{sensors}} RL_{j}}{N_{sensors}}\right)$ Evalúa que en el caso de no tener “agarrado un objeto” (pasar por una baldosa negra), el robot se dirija hacia la luz roja
